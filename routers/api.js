@@ -1,8 +1,6 @@
 import StashKu from '@appku/stashku';
-import axios from 'axios';
 import BaseRouter from './base-router.js';
 import YelpService from '../services/yelp-service.js';
-import SampleService from '../services/sample.js';
 
 class APIRouter extends BaseRouter {
 
@@ -17,7 +15,6 @@ class APIRouter extends BaseRouter {
         });
         this.axios = axios;
         const ys = new YelpService(stash, log);
-        const ss = new SampleService(stash, log);
 
         router.post('/api/yelp', ys.post.bind(ys));
         router.post('/api/yelp-review', ys.postForReview.bind(ys));

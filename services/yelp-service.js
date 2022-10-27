@@ -18,6 +18,7 @@ class YelpService extends BaseService {
    */
   async post(req, res) {
     try {
+      console.log('post going');
       const { location, categories } = req.body;
       let response = await this.axios({
         method: "get",
@@ -47,6 +48,7 @@ class YelpService extends BaseService {
    */
   async postForReview(req, res) {
     try {
+      console.log('post for review going');
       const { id } = req.body
       let response = await this.axios({
         method: "get",

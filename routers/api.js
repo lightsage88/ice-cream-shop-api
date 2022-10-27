@@ -20,6 +20,7 @@ class APIRouter extends BaseRouter {
         const ss = new SampleService(stash, log);
 
         router.post('/api/yelp', ys.post.bind(ys));
+        router.post('/api/yelp-review', ys.postForReview.bind(ys));
     }
 }
 

@@ -23,24 +23,42 @@ class YelpService extends BaseService {
    */
   async post(req, res) {
     try {
-        const requestBodyData = req.body;
-        console.log('req.body', req.body);
-        const { location, categories } = req.body;
-        let response = await this.axios({
-            method: "get",
-            url: `${process.env.YELP_SEARCH_URL}`,
-            headers: {
-              Authorization: `Bearer ${process.env.YELP_API_KEY}`,
-            },
-            params: {
-              location,
-              categories
-            }
-          });
-        console.log('response is:', response);
-        res.json(response.data);
-    } catch (error ) {
-        res.send(error);
+      const { location, categories } = req.body;
+      let response = await this.axios({
+        method: "get",
+        url: `${process.env.YELP_SEARCH_URL}`,
+        headers: {
+          Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+        },
+        params: {
+          location,
+          categories,
+        },
+      });
+      res.json(
+        response.data.businesses.sort((a, b) => b.review_count - a.review_count)
+      );
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  async postForReview(req, res) {
+    try {
+      console.log(req.body);
+      const { id } = req.body
+      let response = await this.axios({
+        method: "get",
+        url: `https://api.yelp.com/v3/businesses/${id}/reviews`,
+        headers: {
+            Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+        }
+      })
+      console.log('review response:',  response);
+
+      res.json(response.data.reviews[0]);
+    } catch (error) {
+      res.send(error);
     }
   }
 }

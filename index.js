@@ -17,7 +17,7 @@ dotenv.config();
     log.debug(`HOST: ${process.env.HOST}`);
     app.listen(port, host, () => {
         app.use(cors())
-        console.log(`listening on ${port}`);
+        console.log(`listening on ${port} for requests`);
         log.info(`Listening on: http://${host}:${port}`)
     });
 })();
